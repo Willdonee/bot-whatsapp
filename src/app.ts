@@ -1,5 +1,6 @@
 import { Client, LocalAuth }  from "whatsapp-web.js";
 import qrcode from "qrcode-terminal";
+import commands from "./commands";
 
 const client = new Client({
     restartOnAuthFail: true,
@@ -33,8 +34,8 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-    if (msg.body == '!ping') {
-        msg.reply('pong');
+    for (const command of commands) {
+        command.handle(msg);
     }
 });
 
