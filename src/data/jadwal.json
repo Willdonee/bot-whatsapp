@@ -1,0 +1,65 @@
+{
+  "628123xxxxxx@c.us": [
+    {
+      "hari": "Senin",
+      "waktu": "12:30",
+      "mataKuliah": "Matematika"
+    }
+  ],
+  "1203630xxxxxx@g.us": [
+    {
+      "hari": "Selasa",
+      "waktu": "14:00",
+      "mataKuliah": "Fisika"
+    }
+  ],
+  "6281390218825@c.us": [
+    {
+      "hari": "senin",
+      "waktu": "07:00",
+      "mataKuliah": "kalkulus"
+    }
+  ],
+  "120363367769588828@g.us": [
+    {
+      "hari": "Senin",
+      "waktu": "12:30",
+      "mataKuliah": "Sistem Basis Data"
+    },
+    {
+      "hari": "Selasa",
+      "waktu": "09:30",
+      "mataKuliah": "Pemrograman Game"
+    },
+    {
+      "hari": "Selasa",
+      "waktu": "12:30",
+      "mataKuliah": "Metode Penelitian"
+    },
+    {
+      "hari": "Selasa",
+      "waktu": "14:10",
+      "mataKuliah": "Pancasila"
+    },
+    {
+      "hari": "Rabu",
+      "waktu": "07:00",
+      "mataKuliah": "Komputasi Awan"
+    },
+    {
+      "hari": "Rabu",
+      "waktu": "10:20",
+      "mataKuliah": "Pengembangan Start-Up Digital"
+    },
+    {
+      "hari": "Kamis",
+      "waktu": "12:30",
+      "mataKuliah": "Computer Vision"
+    },
+    {
+      "hari": "Kamis",
+      "waktu": "16:20",
+      "mataKuliah": "Dasar Kewirausahaan"
+    }
+  ]
+}

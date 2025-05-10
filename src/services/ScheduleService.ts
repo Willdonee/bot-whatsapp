@@ -1,5 +1,6 @@
-// src/services/ScheduleService.ts
+// File: src/services/ScheduleService.ts
 import fs from 'fs';
+import path from 'path';
 
 export interface Jadwal {
   hari: string;
@@ -8,28 +9,51 @@ export interface Jadwal {
 }
 
 export class ScheduleService {
-  private filePath = 'jadwal.json';
+  private filePath: string;
 
   constructor() {
+    // Lokasi file jadwal.json
+    this.filePath = path.join(__dirname, '../data/jadwal.json');
+
+    // Buat folder data jika belum ada
+    const dirPath = path.dirname(this.filePath);
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
+    }
+
+    // Buat file jadwal.json jika belum ada
     if (!fs.existsSync(this.filePath)) {
-      fs.writeFileSync(this.filePath, '[]');
+      fs.writeFileSync(this.filePath, '{}', 'utf8');
     }
   }
 
-  getAll(): Jadwal[] {
-    const data = fs.readFileSync(this.filePath, 'utf-8');
-    return JSON.parse(data);
+  private readData(): Record<string, Jadwal[]> {
+    try {
+      const raw = fs.readFileSync(this.filePath, 'utf8');
+      return JSON.parse(raw || '{}');
+    } catch (error) {
+      console.error('❌ Gagal membaca file jadwal.json:', error);
+      return {};
+    }
   }
 
-  add(jadwal: Jadwal): void {
-    const all = this.getAll();
-    all.push(jadwal);
-    fs.writeFileSync(this.filePath, JSON.stringify(all, null, 2));
+  private writeData(data: Record<string, Jadwal[]>): void {
+    try {
+      fs.writeFileSync(this.filePath, JSON.stringify(data, null, 2), 'utf8');
+    } catch (error) {
+      console.error('❌ Gagal menulis ke file jadwal.json:', error);
+    }
   }
 
-  delete(jadwal: Jadwal): void {
-    const all = this.getAll();
-    const filtered = all.filter((j) => j.hari !== jadwal.hari || j.waktu !== jadwal.waktu || j.mataKuliah !== jadwal.mataKuliah);
-    fs.writeFileSync(this.filePath, JSON.stringify(filtered, null, 2));
+  getAll(chatId: string): Jadwal[] {
+    const data = this.readData();
+    return data[chatId] || [];
+  }
+
+  add(chatId: string, jadwal: Jadwal): void {
+    const data = this.readData();
+    if (!data[chatId]) data[chatId] = [];
+    data[chatId].push(jadwal);
+    this.writeData(data);
   }
 }
