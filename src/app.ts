@@ -1,6 +1,9 @@
 import { Client, LocalAuth }  from "whatsapp-web.js";
 import qrcode from "qrcode-terminal";
 import commands from "./commands";
+import fs from 'fs';
+import { AddScheduleCommand } from "./commands/AddScheduleCommand";
+import { ShowScheduleCommand } from "./commands/ShowScheduleCommand";
 
 const client = new Client({
     restartOnAuthFail: true,
@@ -8,6 +11,7 @@ const client = new Client({
         type: 'remote',
         remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2410.1.html',
     },
+
     puppeteer: {
         headless: true,
         args: [
@@ -36,6 +40,20 @@ client.on('ready', () => {
 client.on('message', msg => {
     for (const command of commands) {
         command.handle(msg);
+    }
+});
+
+client.on('message', async (msg) => {
+    const body = msg.body.toLowerCase();
+
+    if (body.startsWith('!tambahjadwal')) {
+        const command = new AddScheduleCommand();
+      await command.execute(msg);
+    }
+
+    if (body === '!jadwal') {
+        const command = new ShowScheduleCommand();
+        await command.execute(msg);
     }
 });
 

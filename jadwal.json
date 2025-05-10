@@ -1,0 +1,17 @@
+[
+  {
+    "hari": "senin",
+    "waktu": "12:30",
+    "mataKuliah": "sistem basis data"
+  },
+  {
+    "hari": "selasa",
+    "waktu": "09:30",
+    "mataKuliah": "pemrograman game"
+  },
+  {
+    "hari": "Senin",
+    "waktu": "12:30",
+    "mataKuliah": "Pemrograman"
+  }
+]
