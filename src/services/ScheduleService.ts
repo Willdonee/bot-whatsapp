@@ -6,13 +6,13 @@ export interface Jadwal {
   hari: string;
   waktu: string;
   mataKuliah: string;
+  ruang: string;
 }
 
 export class ScheduleService {
   private filePath: string;
 
   constructor() {
-    // Lokasi file jadwal.json
     this.filePath = path.join(__dirname, '../data/jadwal.json');
 
     // Buat folder data jika belum ada

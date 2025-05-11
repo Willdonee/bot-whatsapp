@@ -12,10 +12,20 @@ export class ShowScheduleCommand {
       return;
     }
 
-    const teks = jadwalList
-      .map((j, i) => `${i + 1}. ${j.hari} ${j.waktu} - ${j.mataKuliah}`)
+    // Hindari duplikat berdasarkan kombinasi hari + waktu + mata kuliah + ruang
+    const uniqueSet = new Set<string>();
+    const uniqueList = jadwalList.filter(jadwal => {
+      const key = `${jadwal.hari}|${jadwal.waktu}|${jadwal.mataKuliah}|${jadwal.ruang}`.toLowerCase();
+      if (uniqueSet.has(key)) return false;
+      uniqueSet.add(key);
+      return true;
+    });
+
+    const teks = uniqueList
+      .map((j, i) => `${i + 1}. ${j.hari} ${j.waktu} - ${j.mataKuliah} - ${j.ruang}`)
       .join('\n');
 
     await msg.reply(`📅 Jadwal Kuliah:\n${teks}`);
   }
 }
+
