@@ -56,4 +56,17 @@ export class ScheduleService {
     data[chatId].push(jadwal);
     this.writeData(data);
   }
+
+  update(chatId: string, index: number, updated: Jadwal): boolean {
+  const data = this.readData();
+
+  if (!data[chatId] || !data[chatId][index]) {
+    return false; // Jadwal tidak ditemukan
+  }
+
+  data[chatId][index] = updated;
+  this.writeData(data);
+  return true;
+}
+
 }

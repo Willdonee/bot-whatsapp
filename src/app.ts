@@ -4,6 +4,7 @@ import commands from "./commands";
 import fs from 'fs';
 import { AddScheduleCommand } from "./commands/AddScheduleCommand";
 import { ShowScheduleCommand } from "./commands/ShowScheduleCommand";
+import { EditScheduleCommand } from "./commands/EditScheduleCommand";
 
 const client = new Client({
     restartOnAuthFail: true,
@@ -53,6 +54,11 @@ client.on('message', async (msg) => {
 
     if (body === '!jadwal') {
         const command = new ShowScheduleCommand();
+        await command.execute(msg);
+    }
+
+    if (body.startsWith('!editjadwal')) {
+        const command = new EditScheduleCommand();
         await command.execute(msg);
     }
 });
