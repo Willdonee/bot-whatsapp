@@ -26,9 +26,22 @@
       "mataKuliah": "sistem basis data D3M"
     },
     {
-      "hari": "senin",
-      "waktu": "12:30",
-      "mataKuliah": "kalkulus"
+      "hari": "selasa",
+      "waktu": "09:30",
+      "mataKuliah": "kalkulus",
+      "ruang": "H.2.4"
+    },
+    {
+      "hari": "seinn",
+      "waktu": "09:00",
+      "mataKuliah": "fisika",
+      "ruang": "D76"
+    },
+    {
+      "hari": "selasa",
+      "waktu": "07:00",
+      "mataKuliah": "biologi",
+      "ruang": "D.4.5"
     }
   ],
   "120363367769588828@g.us": [

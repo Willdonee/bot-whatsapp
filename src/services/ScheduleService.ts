@@ -3,11 +3,31 @@ import fs from 'fs';
 import path from 'path';
 
 export interface Jadwal {
-  hari: string;
-  waktu: string;
-  mataKuliah: string;
-  ruang: string;
+    hari: string;
+    waktu: string;
+    mataKuliah: string;
+    ruang: string;
 }
+
+export enum Hari {
+    Senin = "Senin",
+    Selasa = "Selasa",
+    Rabu = "Rabu",
+    Kamis = "Kamis",
+    Jumat = "Jumat",
+    Sabtu = "Sabtu",
+    Minggu = "Minggu"
+}
+
+export function isValidHari(input: string): boolean {
+    const formattedInput = capitalizeFirstLetter(input.trim().toLowerCase());
+    return Object.values(Hari).includes(formattedInput as Hari);
+}
+
+function capitalizeFirstLetter(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
 
 export class ScheduleService {
   private filePath: string;
@@ -53,20 +73,30 @@ export class ScheduleService {
   add(chatId: string, jadwal: Jadwal): void {
     const data = this.readData();
     if (!data[chatId]) data[chatId] = [];
-    data[chatId].push(jadwal);
-    this.writeData(data);
+
+    const isDuplicate = data[chatId].some(
+      (j) =>
+        j.hari.toLowerCase() === jadwal.hari.toLowerCase() &&
+        j.waktu === jadwal.waktu &&
+        j.mataKuliah.toLowerCase() === jadwal.mataKuliah.toLowerCase() &&
+        j.ruang.toLowerCase() === jadwal.ruang.toLowerCase()
+    );
+
+    if (!isDuplicate) {
+      data[chatId].push(jadwal);
+      this.writeData(data);
+    }
   }
 
   update(chatId: string, index: number, updated: Jadwal): boolean {
-  const data = this.readData();
+    const data = this.readData();
 
-  if (!data[chatId] || !data[chatId][index]) {
-    return false; // Jadwal tidak ditemukan
+    if (!data[chatId] || !data[chatId][index]) {
+      return false; // Jadwal tidak ditemukan
+    }
+
+    data[chatId][index] = updated;
+    this.writeData(data);
+    return true;
   }
-
-  data[chatId][index] = updated;
-  this.writeData(data);
-  return true;
-}
-
 }
