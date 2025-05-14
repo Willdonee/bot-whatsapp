@@ -50,6 +50,12 @@
       "waktu": "12:30",
       "mataKuliah": "Sistem Basis Data",
       "ruang": "D.3.M"
+    },
+    {
+      "hari": "selasa",
+      "waktu": "09:30",
+      "mataKuliah": "pemrograman game",
+      "ruang": "H.3.8"
     }
   ]
 }

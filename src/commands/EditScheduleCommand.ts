@@ -21,8 +21,8 @@ export class EditScheduleCommand {
             return;
         }
 
-          const updated: Jadwal = { hari, waktu, mataKuliah, ruang};
-          const success = this.service.update(msg.from, index, updated);
+            const updated: Jadwal = { hari, waktu, mataKuliah, ruang};
+            const success = this.service.update(msg.from, index, updated);
 
         if (!success) {
             await msg.reply('❌ Gagal mengedit jadwal. Pastikan index benar.');
