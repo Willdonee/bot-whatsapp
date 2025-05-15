@@ -66,6 +66,8 @@ client.on('message', async (msg) => {
     if (body.startsWith('!hapusjadwal')){
         const command = new DeleteScheduleCommand();
         await command.execute(msg);
+    } else {
+        await DeleteScheduleCommand.handleConfirmation(msg);
     }
 });
 
