@@ -23,7 +23,8 @@
     {
       "hari": "senin",
       "waktu": "12:30",
-      "mataKuliah": "sistem basis data D3M"
+      "mataKuliah": "sistem basis data",
+      "ruang": "D.3.4"
     },
     {
       "hari": "selasa",
@@ -42,6 +43,60 @@
       "waktu": "07:00",
       "mataKuliah": "biologi",
       "ruang": "D.4.5"
+    },
+    {
+      "hari": "Rabu",
+      "waktu": "07:00",
+      "mataKuliah": "Komputasi Awan",
+      "ruang": "H.4.6"
+    },
+    {
+      "hari": "Rabu",
+      "waktu": "89:00",
+      "mataKuliah": "olahraga",
+      "ruang": "H.3.3"
+    },
+    {
+      "hari": "Kamis",
+      "waktu": "07:00",
+      "mataKuliah": "pemrograman game",
+      "ruang": "H.8.9"
+    },
+    {
+      "hari": "Senin",
+      "waktu": "12:00",
+      "mataKuliah": "pemrograman web",
+      "ruang": "H.2.1"
+    },
+    {
+      "hari": "Selasa",
+      "waktu": "12:00",
+      "mataKuliah": "pkn",
+      "ruang": "H.4.1"
+    },
+    {
+      "hari": "Kamis",
+      "waktu": "09:00",
+      "mataKuliah": "agama",
+      "ruang": "Online"
+    },
+    {
+      "hari": "Jumat",
+      "waktu": "07:00",
+      "mataKuliah": "biografi",
+      "ruang": "H.3.7"
+    },
+    {
+      "hari": "Sabtu",
+      "waktu": "07:00",
+      "mataKuliah": "KP",
+      "ruang": "Online"
+    },
+    {
+      "hari": "Senin",
+      "waktu": "18:00",
+      "mataKuliah": "daswir",
+      "ruang": "Online"
     }
   ],
   "120363367769588828@g.us": [

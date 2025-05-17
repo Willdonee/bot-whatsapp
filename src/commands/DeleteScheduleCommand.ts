@@ -24,20 +24,20 @@ export class DeleteScheduleCommand {
     }
 
     static async handleConfirmation(msg: Message): Promise<void> {
-            const chatId = msg.from;
-            const text = msg.body.trim().toLowerCase();
+        const chatId = msg.from;
+        const text = msg.body.trim().toLowerCase();
 
-            if (text === '!konfirmasi' && pendingConfirmations.has(chatId)) {
-                const index = pendingConfirmations.get(chatId)!;
-                const service = new ScheduleService();
-                const success = service.delete(chatId, index);
+        if (text === '!konfirmasi' && pendingConfirmations.has(chatId)) {
+            const index = pendingConfirmations.get(chatId)!;
+            const service = new ScheduleService();
+            const success = service.delete(chatId, index);
                 
-                if (success) {
-                    await msg.reply(`✅ Jadwal ke-${index + 1} berhasil dihapus.`);
-                } else {
-                    await msg.reply('❌ Gagal menghapus. Jadwal tidak ditemukan.');
-                }
-                pendingConfirmations.delete(chatId);
+            if (success) {
+                await msg.reply(`✅ Jadwal ke-${index + 1} berhasil dihapus.`);
+            } else {
+                await msg.reply('❌ Gagal menghapus. Jadwal tidak ditemukan.');
             }
+            pendingConfirmations.delete(chatId);
+        }
     }
 }

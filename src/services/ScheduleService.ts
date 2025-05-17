@@ -1,6 +1,7 @@
 // File: src/services/ScheduleService.ts
 import fs from 'fs';
 import path from 'path';
+import { formatJadwal } from '../utils/FormatSchedule';
 
 export interface Jadwal {
     hari: string;
@@ -8,26 +9,6 @@ export interface Jadwal {
     mataKuliah: string;
     ruang: string;
 }
-
-export enum Hari {
-    Senin = "Senin",
-    Selasa = "Selasa",
-    Rabu = "Rabu",
-    Kamis = "Kamis",
-    Jumat = "Jumat",
-    Sabtu = "Sabtu",
-    Minggu = "Minggu"
-}
-
-export function isValidHari(input: string): boolean {
-    const formattedInput = capitalizeFirstLetter(input.trim().toLowerCase());
-    return Object.values(Hari).includes(formattedInput as Hari);
-}
-
-function capitalizeFirstLetter(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-}
-
 
 export class ScheduleService {
     private filePath: string;
@@ -70,22 +51,30 @@ export class ScheduleService {
         return data[chatId] || [];
     }
 
-    add(chatId: string, jadwal: Jadwal): void {
+    add(chatId: string, jadwal: Jadwal): { success: boolean; message: string } {
         const data = this.readData();
         if (!data[chatId]) data[chatId] = [];
 
-        const isDuplicate = data[chatId].some(
-            (j) =>
-                j.hari.toLowerCase() === jadwal.hari.toLowerCase() &&
-                j.waktu === jadwal.waktu &&
-                j.mataKuliah.toLowerCase() === jadwal.mataKuliah.toLowerCase() &&
-                j.ruang.toLowerCase() === jadwal.ruang.toLowerCase()
+        const isDuplicate = data[chatId].some(existing =>
+            existing.hari.toLowerCase() === jadwal.hari.toLowerCase() &&
+            existing.waktu === jadwal.waktu &&
+            existing.mataKuliah.toLowerCase() === jadwal.mataKuliah.toLowerCase() &&
+            existing.ruang.toLowerCase() === jadwal.ruang.toLowerCase()
         );
 
-        if (!isDuplicate) {
-            data[chatId].push(jadwal);
-            this.writeData(data);
+        if (isDuplicate) {
+            return {
+            success: false,
+            message: '❌ Jadwal sudah ada. Silakan cek kembali jadwal Anda.',
+            };
         }
+
+        data[chatId].push(jadwal);
+        this.writeData(data);
+        return {
+            success: true,
+            message: `✅ Jadwal berhasil ditambahkan!\n\n${formatJadwal(jadwal)}`,
+        };
     }
 
     update(chatId: string, index: number, updated: Jadwal): boolean {
