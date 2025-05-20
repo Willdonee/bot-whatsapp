@@ -6,6 +6,7 @@ import { AddScheduleCommand } from "./commands/AddScheduleCommand";
 import { ShowScheduleCommand } from "./commands/ShowScheduleCommand";
 import { EditScheduleCommand } from "./commands/EditScheduleCommand";
 import { DeleteScheduleCommand } from "./commands/DeleteScheduleCommand";
+import { CariJadwalCommand } from "./commands/FindScheduleCommand";
 
 const client = new Client({
     restartOnAuthFail: true,
@@ -60,6 +61,11 @@ client.on('message', async (msg) => {
 
     if (body.startsWith('!editjadwal')) {
         const command = new EditScheduleCommand();
+        await command.execute(msg);
+    }
+
+    if (body.startsWith('!carijadwal')) {
+        const command = new CariJadwalCommand();
         await command.execute(msg);
     }
 

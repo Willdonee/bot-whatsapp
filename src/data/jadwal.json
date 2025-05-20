@@ -111,6 +111,18 @@
       "waktu": "09:30",
       "mataKuliah": "pemrograman game",
       "ruang": "H.3.8"
+    },
+    {
+      "hari": "Selasa",
+      "waktu": "12:30",
+      "mataKuliah": "Metode Penelitian",
+      "ruang": "H.4.10"
+    },
+    {
+      "hari": "Selasa",
+      "waktu": "14:10",
+      "mataKuliah": "Pancasila",
+      "ruang": "Online"
     }
   ]
 }
