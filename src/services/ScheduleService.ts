@@ -99,4 +99,8 @@ export class ScheduleService {
         this.writeData(data);
         return true;
     }
+
+    getAllData(): Record<string, Jadwal[]> {
+        return this.readData();
+    }
 }
