@@ -1,6 +1,7 @@
 import { Message } from "whatsapp-web.js";
 import { Jadwal, ScheduleService } from "../services/ScheduleService";
 import { formatHari, isValidHari } from "../validators/DayValidator";
+import { isValidWaktuLokal } from "../validators/TimeValidator";
 
 export class AddScheduleCommand {
     private service = new ScheduleService();
@@ -23,6 +24,11 @@ export class AddScheduleCommand {
 
         if (!isValidHari(hari)) {
             await msg.reply("❌ Hari tidak valid. Gunakan format:\nSenin, Selasa, Rabu, dst.");
+            return;
+        }
+
+        if (!isValidWaktuLokal(waktu)) {
+            await msg.reply('❌ Format waktu tidak valid atau di luar jam kuliah (06:00 - 22:00 WIB). Contoh: 09:30');
             return;
         }
 
