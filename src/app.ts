@@ -7,6 +7,8 @@ import { ShowScheduleCommand } from "./commands/ShowScheduleCommand";
 import { EditScheduleCommand } from "./commands/EditScheduleCommand";
 import { DeleteScheduleCommand } from "./commands/DeleteScheduleCommand";
 import { CariJadwalCommand } from "./commands/FindScheduleCommand";
+import { ScheduleService } from "./services/ScheduleService";
+import { ReminderService } from "./schedullers/ReminderScheduller";
 
 const client = new Client({
     restartOnAuthFail: true,
@@ -38,6 +40,9 @@ client.on('qr', (qr) => {
 
 client.on('ready', () => {
     console.log('Client is ready!');
+    const scheduleService = new ScheduleService();
+    const reminderService = new ReminderService(client, scheduleService);
+    reminderService.start();
 });
 
 client.on('message', msg => {
