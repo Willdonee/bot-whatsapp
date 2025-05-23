@@ -1,85 +1,76 @@
-import { Client, LocalAuth }  from "whatsapp-web.js";
+import { Client, LocalAuth } from "whatsapp-web.js";
 import qrcode from "qrcode-terminal";
 import commands from "./commands";
-import fs from 'fs';
+
 import { AddScheduleCommand } from "./commands/AddScheduleCommand";
 import { ShowScheduleCommand } from "./commands/ShowScheduleCommand";
 import { EditScheduleCommand } from "./commands/EditScheduleCommand";
 import { DeleteScheduleCommand } from "./commands/DeleteScheduleCommand";
 import { CariJadwalCommand } from "./commands/FindScheduleCommand";
-import { ScheduleService } from "./services/ScheduleService";
-import { ReminderService } from "./schedullers/ReminderScheduller";
+
+import { ReminderSchedule } from "./schedulers/ReminderScheduler";
 
 const client = new Client({
     restartOnAuthFail: true,
-    webVersionCache:{
-        type: 'remote',
-        remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2410.1.html',
+    webVersionCache: {
+        type: "remote",
+        remotePath: "https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2410.1.html",
     },
-
     puppeteer: {
         headless: true,
         args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage',
-            '--disable-accelarated-2d-canvas',
-            '--no-first-run',
-            '--no-zygote',
-            '--single-process',
-            '--disable-gpu',
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-accelerated-2d-canvas",
+        "--no-first-run",
+        "--no-zygote",
+        "--single-process",
+        "--disable-gpu",
         ],
     },
     authStrategy: new LocalAuth(),
 });
 
-client.on('qr', (qr) => {
-    console.log('QR RECEIVED', qr);
+// 🔁 QR Code generator
+client.on("qr", (qr) => {
+    console.log("QR RECEIVED", qr);
     qrcode.generate(qr, { small: true });
 });
 
-client.on('ready', () => {
-    console.log('Client is ready!');
-    const scheduleService = new ScheduleService();
-    const reminderService = new ReminderService(client, scheduleService);
-    reminderService.start();
+// ✅ Bot ready
+client.on("ready", () => {
+    console.log("✅ Bot is ready!");
+
+    // ⏰ Mulai scheduler reminder
+    ReminderSchedule(client);
 });
 
-client.on('message', msg => {
+// 💬 Tangani pesan
+client.on("message", async (msg) => {
+  const body = msg.body.toLowerCase();
+
+    // Commands khusus
+    if (body.startsWith("!tambahjadwal")) {
+        await new AddScheduleCommand().execute(msg);
+    } else if (body === "!jadwal") {
+        await new ShowScheduleCommand().execute(msg);
+    } else if (body.startsWith("!editjadwal")) {
+        await new EditScheduleCommand().execute(msg);
+    } else if (body.startsWith("!carijadwal")) {
+        await new CariJadwalCommand().execute(msg);
+    } else if (body.startsWith("!hapusjadwal")) {
+        await new DeleteScheduleCommand().execute(msg);
+    } else {
+        // Konfirmasi penghapusan (jika ada)
+        await DeleteScheduleCommand.handleConfirmation(msg);
+    }
+
+    // Jalankan command handler tambahan jika ada
     for (const command of commands) {
         command.handle(msg);
     }
 });
 
-client.on('message', async (msg) => {
-    const body = msg.body.toLowerCase();
-
-    if (body.startsWith('!tambahjadwal')) {
-        const command = new AddScheduleCommand();
-      await command.execute(msg);
-    }
-
-    if (body === '!jadwal') {
-        const command = new ShowScheduleCommand();
-        await command.execute(msg);
-    }
-
-    if (body.startsWith('!editjadwal')) {
-        const command = new EditScheduleCommand();
-        await command.execute(msg);
-    }
-
-    if (body.startsWith('!carijadwal')) {
-        const command = new CariJadwalCommand();
-        await command.execute(msg);
-    }
-
-    if (body.startsWith('!hapusjadwal')){
-        const command = new DeleteScheduleCommand();
-        await command.execute(msg);
-    } else {
-        await DeleteScheduleCommand.handleConfirmation(msg);
-    }
-});
-
+// 🚀 Inisialisasi bot
 client.initialize();

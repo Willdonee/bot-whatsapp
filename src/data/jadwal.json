@@ -103,6 +103,18 @@
       "waktu": "06:00",
       "mataKuliah": "ipa",
       "ruang": "H.3.5"
+    },
+    {
+      "hari": "Jumat",
+      "waktu": "21:50",
+      "mataKuliah": "coba coba",
+      "ruang": "online"
+    },
+    {
+      "hari": "Jumat",
+      "waktu": "22:15",
+      "mataKuliah": "coba",
+      "ruang": "online"
     }
   ],
   "120363367769588828@g.us": [
