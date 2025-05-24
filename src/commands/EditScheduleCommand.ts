@@ -54,5 +54,4 @@ export class EditScheduleCommand {
 
         await msg.reply(`✅ Jadwal ke-${index + 1} berhasil diubah:\n${hari} ${waktu} - ${mataKuliah} - ${ruang}`);
     }
-
 }

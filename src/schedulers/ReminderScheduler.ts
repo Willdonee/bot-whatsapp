@@ -35,12 +35,12 @@ export function ReminderSchedule(bot: Client) {
                     // ID unik reminder untuk mencegah pengulangan
                     const uniqueId = `${chatId}-${jadwal.mataKuliah}-${jadwal.waktu}-${now.format('YYYY-MM-DD')}`;
 
-                    if (isToday && diffMinutes === 15 && !sentReminders.has(uniqueId)) {
+                    if (isToday && diffMinutes === 60 && !sentReminders.has(uniqueId)) {
                         const reminderMessage = `⏰ *Pengingat Jadwal*\n` +
                             `Mata kuliah: *${jadwal.mataKuliah}*\n` +
                             `Waktu: *${jadwal.waktu}*\n` +
                             `Ruang: *${jadwal.ruang}*\n\n` +
-                            `⏳ Kelas akan dimulai dalam 15 menit. Jangan lupa persiapan ya! 📚`;
+                            `⏳ 1 Jam lagi ada kelas ${jadwal.mataKuliah}. Jangan lupa mandi ges!`;
 
                         await bot.sendMessage(chatId, reminderMessage);
                         sentReminders.add(uniqueId);

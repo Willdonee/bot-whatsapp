@@ -121,6 +121,36 @@
       "waktu": "10:00",
       "mataKuliah": "alpro",
       "ruang": "H43"
+    },
+    {
+      "hari": "Senin",
+      "waktu": "09:00",
+      "mataKuliah": "nyoba",
+      "ruang": "online"
+    },
+    {
+      "hari": "Selasa",
+      "waktu": "08:00",
+      "mataKuliah": "nyoba",
+      "ruang": "online"
+    },
+    {
+      "hari": "Rabu",
+      "waktu": "07:00",
+      "mataKuliah": "nyoba",
+      "ruang": "h23"
+    },
+    {
+      "hari": "Kamis",
+      "waktu": "07:00",
+      "mataKuliah": "nyoba nambah",
+      "ruang": "H45"
+    },
+    {
+      "hari": "Jumat",
+      "waktu": "08:00",
+      "mataKuliah": "nanananan",
+      "ruang": "online"
     }
   ],
   "120363367769588828@g.us": [

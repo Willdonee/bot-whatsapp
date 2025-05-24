@@ -1,10 +1,10 @@
 import { Jadwal } from '../services/ScheduleService';
 
 export function formatJadwal(jadwal: Jadwal): string {
-    return `📅 Hari : ${jadwal.hari}
-🕒 Waktu    : ${jadwal.waktu}
-📚 Mata Kuliah  : ${jadwal.mataKuliah}
-🏫 Ruang    : ${jadwal.ruang}`;
+    return `📅 Hari\t\t  : ${jadwal.hari}
+🕒 Waktu\t\t  : ${jadwal.waktu}
+📚 Mata Kuliah : ${jadwal.mataKuliah}
+🏫 Ruang\t\t  : ${jadwal.ruang}`;
 }
 
 export function formatJadwalList(jadwalList: Jadwal[]): string {
