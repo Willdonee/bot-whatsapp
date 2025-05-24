@@ -1,5 +1,7 @@
 import { Message } from 'whatsapp-web.js';
 import { ScheduleService, Jadwal } from '../services/ScheduleService';
+import { isValidHari } from '../validators/DayValidator';
+import { isValidWaktuLokal } from '../validators/TimeValidator';
 
 export class EditScheduleCommand {
     private service = new ScheduleService();
@@ -16,12 +18,33 @@ export class EditScheduleCommand {
 
         const index = parseInt(indexStr) - 1;
 
-        if (isNaN(index) || !hari || !waktu || !mataKuliah || !ruang) {
-            await msg.reply('❌ Format salah.\nContoh: !editjadwal 1 Senin 14:00 Algoritma D25');
+        // Validasi input
+        if (isNaN(index) || index < 0) {
+            await msg.reply('❌ Format salah. Pastikan index adalah angka yang valid.');
             return;
         }
 
-        const updated: Jadwal = { hari, waktu, mataKuliah, ruang};
+        if (!hari || !isValidHari(hari)) {
+            await msg.reply('❌ Hari tidak valid. Gunakan format:\nSenin, Selasa, Rabu, dst.');
+            return;
+        }
+
+        if (!waktu || !isValidWaktuLokal(waktu)) {
+            await msg.reply('❌ Format waktu tidak valid atau di luar jam kuliah (06:00 - 22:00 WIB). Contoh: 09:30');
+            return;
+        }
+
+        if (!mataKuliah || mataKuliah.trim().length === 0) {
+            await msg.reply('❌ Mata kuliah tidak boleh kosong.');
+            return;
+        }
+
+        if (!ruang || ruang.trim().length === 0) {
+            await msg.reply('❌ Ruang tidak boleh kosong.');
+            return;
+        }
+
+        const updated: Jadwal = { hari, waktu, mataKuliah, ruang };
         const success = this.service.update(msg.from, index, updated);
 
         if (!success) {
@@ -31,4 +54,5 @@ export class EditScheduleCommand {
 
         await msg.reply(`✅ Jadwal ke-${index + 1} berhasil diubah:\n${hari} ${waktu} - ${mataKuliah} - ${ruang}`);
     }
+
 }
