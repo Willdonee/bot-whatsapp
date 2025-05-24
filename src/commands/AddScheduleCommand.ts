@@ -18,21 +18,32 @@ export class AddScheduleCommand {
         const hari = formatHari(rawHari);
 
         if (!hari || !waktu || !mataKuliah || !ruang) {
-            await msg.reply('❌ Format salah.\nContoh: !tambahjadwal Senin 12:30 Pemrograman D.2.3');
+            await msg.reply('❌ Format salah. Gunakan:\n!tambahjadwal <hari> <waktu> <mata kuliah> <ruang>\nContoh: !tambahjadwal Senin 09:30 Algoritma H58');
             return;
         }
 
-        if (!isValidHari(hari)) {
-            await msg.reply("❌ Hari tidak valid. Gunakan format:\nSenin, Selasa, Rabu, dst.");
+        // Validasi input
+        if (!hari) {
+            await msg.reply('❌ Hari tidak valid. Gunakan format:\nSenin, Selasa, Rabu, dst.');
             return;
         }
 
-        if (!isValidWaktuLokal(waktu)) {
+        if (!waktu || !isValidWaktuLokal(waktu)) {
             await msg.reply('❌ Format waktu tidak valid atau di luar jam kuliah (06:00 - 22:00 WIB). Contoh: 09:30');
             return;
         }
 
-        const jadwal: Jadwal = { hari, waktu, mataKuliah, ruang};
+        if (!mataKuliah || mataKuliah.trim().length === 0) {
+            await msg.reply('❌ Mata kuliah tidak boleh kosong.');
+            return;
+        }
+
+        if (!ruang || ruang.trim().length === 0) {
+            await msg.reply('❌ Ruang tidak boleh kosong.');
+            return;
+        }
+
+        const jadwal: Jadwal = { hari, waktu, mataKuliah, ruang };
         const result = this.service.add(msg.from, jadwal);
         await msg.reply(result.message);
     }

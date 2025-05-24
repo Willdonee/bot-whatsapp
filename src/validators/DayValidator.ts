@@ -10,12 +10,18 @@ export enum Hari {
     Minggu = "Minggu"
 }
 
-export function isValidHari(input: string): boolean {
+export function isValidHari(input: string | undefined): boolean {
+    if (!input) {
+        return false; // Kembalikan false jika input tidak valid
+    }
     const formattedInput = capitalizeFirstLetter(input.trim().toLowerCase());
     return Object.values(Hari).includes(formattedInput as Hari);
 }
 
-export function formatHari(input: string): Hari | null {
+export function formatHari(input: string | undefined): Hari | null {
+    if (!input) {
+        return null; // Kembalikan null jika input tidak valid
+    }
     const formattedInput = capitalizeFirstLetter(input.trim().toLowerCase());
     return isValidHari(formattedInput) ? formattedInput as Hari : null;
 }
