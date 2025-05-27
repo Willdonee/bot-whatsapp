@@ -9,6 +9,7 @@ import { DeleteScheduleCommand } from "./commands/DeleteScheduleCommand";
 import { CariJadwalCommand } from "./commands/FindScheduleCommand";
 
 import { ReminderSchedule } from "./schedulers/ReminderScheduler";
+import { DailyReminderScheduler } from "./schedulers/DailyReminderScheduler";
 
 const client = new Client({
     restartOnAuthFail: true,
@@ -44,6 +45,8 @@ client.on("ready", () => {
 
     // ⏰ Mulai scheduler reminder
     ReminderSchedule(client);
+    // 🗓️ Mulai scheduler notifikasi harian
+    DailyReminderScheduler(client);
 });
 
 // 💬 Tangani pesan
